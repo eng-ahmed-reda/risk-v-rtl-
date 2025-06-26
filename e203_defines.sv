@@ -31,82 +31,38 @@
 /////////////////////////////////////////////////////////////////////////////
 /////// ISA relevant macro
 //
-`ifdef E203_CFG_ADDR_SIZE_IS_16
-   `define E203_ADDR_SIZE_IS_16
-   `define E203_PC_SIZE_IS_16
-   `define E203_ADDR_SIZE   16
-   `define E203_PC_SIZE     16
-`endif
-`ifdef E203_CFG_ADDR_SIZE_IS_32
    `define E203_ADDR_SIZE_IS_32
    `define E203_PC_SIZE_IS_32
    `define E203_ADDR_SIZE   32
    `define E203_PC_SIZE     32
-`endif
-`ifdef E203_CFG_ADDR_SIZE_IS_24
-   `define E203_ADDR_SIZE_IS_24
-   `define E203_PC_SIZE_IS_24
-   `define E203_ADDR_SIZE   24
-   `define E203_PC_SIZE     24
-`endif
 
-
-//`ifdef E203_CFG_SUPPORT_MSCRATCH
    `define E203_SUPPORT_MSCRATCH 
-//`endif
-//`ifdef E203_CFG_SUPPORT_MTVEC
    `define E203_SUPPORT_MTVEC
-//`endif
-`ifdef E203_CFG_SUPPORT_MCYCLE_MINSTRET
    `define E203_SUPPORT_MCYCLE_MINSTRET 
-`endif
-
 
 `define E203_CFG_XLEN_IS_32
-`ifdef E203_CFG_XLEN_IS_32//{
   `define E203_XLEN_IS_32 
   `define E203_XLEN          32
   `define E203_XLEN_MW       4
-`endif//}
 
 `define E203_INSTR_SIZE    32
 
 //
 `define E203_RFIDX_WIDTH   5
-`ifdef E203_CFG_REGNUM_IS_32//{
   `define E203_RFREG_NUM_IS_32 
   `define E203_RFREG_NUM     32
-`endif//}
-`ifdef E203_CFG_REGNUM_IS_16//{
-  `define E203_RFREG_NUM_IS_16 
-  `define E203_RFREG_NUM     16
-`endif//}
-`ifdef E203_CFG_REGNUM_IS_8//{
-  `define E203_RFREG_NUM_IS_8 
-  `define E203_RFREG_NUM     8
-`endif//}
-`ifdef E203_CFG_REGNUM_IS_4//{
-  `define E203_RFREG_NUM_IS_4 
-  `define E203_RFREG_NUM     4
-`endif//}
 
-`ifdef E203_CFG_REGFILE_LATCH_BASED//{
-    `ifndef FPGA_SOURCE//{ Only If there is not on FPGA
-        `define E203_REGFILE_LATCH_BASED 
-    `endif//}
-`endif//}
-
-`define E203_PPI_ADDR_BASE    `E203_CFG_PPI_ADDR_BASE  
-`define E203_PPI_BASE_REGION  `E203_CFG_PPI_BASE_REGION
-`define E203_CLINT_ADDR_BASE    `E203_CFG_CLINT_ADDR_BASE  
-`define E203_CLINT_BASE_REGION  `E203_CFG_CLINT_BASE_REGION
-`define E203_PLIC_ADDR_BASE    `E203_CFG_PLIC_ADDR_BASE  
-`define E203_PLIC_BASE_REGION  `E203_CFG_PLIC_BASE_REGION
-`define E203_FIO_ADDR_BASE    `E203_CFG_FIO_ADDR_BASE  
-`define E203_FIO_BASE_REGION  `E203_CFG_FIO_BASE_REGION
+`define E203_PPI_ADDR_BASE    32'h1000_0000
+`define E203_PPI_BASE_REGION  31:28
+`define E203_CLINT_ADDR_BASE  32'h0200_0000
+`define E203_CLINT_BASE_REGION 31:16
+`define E203_PLIC_ADDR_BASE   32'h0C00_0000
+`define E203_PLIC_BASE_REGION 31:24
+`define E203_FIO_ADDR_BASE    32'hf000_0000
+`define E203_FIO_BASE_REGION  31:28
                               
-`define E203_DTCM_ADDR_BASE   `E203_CFG_DTCM_ADDR_BASE 
-`define E203_ITCM_ADDR_BASE   `E203_CFG_ITCM_ADDR_BASE 
+`define E203_DTCM_ADDR_BASE   32'h9000_0000
+`define E203_ITCM_ADDR_BASE   32'h8000_0000
                              
 
 
@@ -122,54 +78,30 @@
 `define E203_EVT_NUM    1
 
 `define E203_CFG_DEBUG_HAS_DM
-`ifdef E203_CFG_DEBUG_HAS_DM//{
    `define E203_DEBUG_HAS_DM 
-`endif//}
 
-`ifdef E203_CFG_IRQ_NEED_SYNC//{
    `define E203_IRQ_NEED_SYNC 
-`endif//}
 
-`ifdef E203_CFG_DEBUG_HAS_JTAG//{
    `define E203_DEBUG_HAS_JTAG 
-`endif//}
 
 `define E203_HAS_MEM_ITF
 `define E203_CFG_SYSMEM_DATA_WIDTH_IS_32
-`ifdef E203_CFG_SYSMEM_DATA_WIDTH_IS_32
     `define E203_SYSMEM_DATA_WIDTH_IS_32
     `define E203_SYSMEM_DATA_WIDTH   32
-`endif
-`ifdef E203_CFG_SYSMEM_DATA_WIDTH_IS_64
-    `define E203_SYSMEM_DATA_WIDTH_IS_64
-    `define E203_SYSMEM_DATA_WIDTH   64
-`endif
-
-//`ifdef E203_CFG_HAS_FIO//{
-//  `define E203_HAS_FIO 
-//`endif//}
 
 `define E203_HAS_PPI 
 `define E203_HAS_PLIC 
 `define E203_HAS_CLINT 
 `define E203_HAS_FIO 
 
-`ifdef E203_CFG_HAS_ECC//{
-`endif//}
-`ifdef E203_CFG_HAS_NICE//{
    `define E203_HAS_NICE
    //`define E203_HAS_CSR_NICE 
-`endif//}
-
-`ifdef E203_CFG_HAS_LOCKSTEP//{
-`endif//}
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////// ITCM relevant macro
 //
-`ifdef E203_CFG_HAS_ITCM//{
   `define E203_HAS_ITCM 1
   `define E203_ITCM_ADDR_WIDTH  16
   // The ITCM size is 2^addr_width bytes, and ITCM is 64bits wide (8 bytes)
@@ -177,32 +109,27 @@
   //  so the AW is addr_wdith - 3
   `define E203_ITCM_RAM_DP      (1<<(16-3)) 
   `define E203_ITCM_RAM_AW      (16-3) 
-  `define E203_ITCM_BASE_REGION  31:16
+  `define E203_ITCM_BASE_REGION 31:16
   
   `define E203_CFG_ITCM_DATA_WIDTH_IS_64
-  `ifdef E203_CFG_ITCM_DATA_WIDTH_IS_64
     `define E203_ITCM_DATA_WIDTH_IS_64
     `define E203_ITCM_DATA_WIDTH  64
     `define E203_ITCM_WMSK_WIDTH  8
   
     `define E203_ITCM_RAM_ECC_DW  8
     `define E203_ITCM_RAM_ECC_MW  1
-  `endif
-  `ifndef E203_HAS_ECC //{
+
     `define E203_ITCM_RAM_DW      64
     `define E203_ITCM_RAM_MW      8
     `define E203_ITCM_OUTS_NUM 1 // If no-ECC, ITCM is 1 cycle latency then only allow 1 oustanding for external agent
-  `endif//}
 
   `define E203_HAS_ITCM_EXTITF
-`endif//}
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////// DTCM relevant macro
 //
-`ifdef E203_CFG_HAS_DTCM//{
   `define E203_HAS_DTCM 1
   `define E203_DTCM_ADDR_WIDTH  16
   // The DTCM size is 2^addr_width bytes, and DTCM is 32bits wide (4 bytes)
@@ -218,38 +145,20 @@
     `define E203_DTCM_RAM_ECC_DW  7
     `define E203_DTCM_RAM_ECC_MW  1
 
-  `ifndef E203_HAS_ECC //{
     `define E203_DTCM_RAM_DW      32
     `define E203_DTCM_RAM_MW      4
     `define E203_DTCM_OUTS_NUM 1 // If no-ECC, DTCM is 1 cycle latency then only allow 1 oustanding for external agent
-  `endif//}
 
 
   `define E203_HAS_DTCM_EXTITF
-`endif//}
-
-
-
-
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /////// MULDIV relevant macro
 //
-  `ifdef E203_CFG_SUPPORT_SHARE_MULDIV//{
 `define E203_SUPPORT_MULDIV
 `define E203_SUPPORT_SHARE_MULDIV
-  `endif//}
-
-  `ifdef E203_CFG_SUPPORT_INDEP_MULDIV//{
-`define E203_SUPPORT_MULDIV
-`define E203_SUPPORT_INDEP_MUL_1CYC
-  `endif//}
-
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -258,13 +167,7 @@
 //
 `define E203_MULDIV_ADDER_WIDTH 35
 
-  `ifdef E203_CFG_SUPPORT_SHARE_MULDIV
-`define E203_ALU_ADDER_WIDTH `E203_MULDIV_ADDER_WIDTH
-  `endif
-  `ifndef E203_CFG_SUPPORT_SHARE_MULDIV
-`define E203_ALU_ADDER_WIDTH (`E203_XLEN+1)
-  `endif
-
+`define E203_ALU_ADDER_WIDTH 35
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -272,42 +175,12 @@
 /////// MAS relevant macro
 //
 `define E203_ASYNC_FF_LEVELS   2
-//`ifdef E203_CFG_OITF_DEPTH_IS_1
-//  `define E203_OITF_DEPTH     1
-//  `define E203_OITF_DEPTH_IS_1
-//`endif
- // To cut down the loop between ALU write-back valid --> oitf_ret_ena --> oitf_ready ---> dispatch_ready --- > alu_i_valid
- //   we exclude the ret_ena from the ready signal
- //   so in order to back2back dispatch, we need at least 2 entries in OITF
 `define E203_CFG_OITF_DEPTH_IS_2
-`ifdef E203_CFG_SUPPORT_INDEP_MULDIV//{
-  `define E203_CFG_OITF_DEPTH_IS_4
-`endif//}
-`ifdef E203_CFG_HAS_FPU//{
-  `define E203_CFG_OITF_DEPTH_IS_4
-`endif//}
-
-`ifdef E203_CFG_OITF_DEPTH_IS_4
-  `define E203_OITF_DEPTH     4
-  `define E203_OITF_DEPTH_IS_4
-  `define E203_ITAG_WIDTH  2
-`elsif E203_CFG_OITF_DEPTH_IS_2
   `define E203_OITF_DEPTH     2
   `define E203_OITF_DEPTH_IS_2
   `define E203_ITAG_WIDTH  1
-`endif
 
-`ifdef E203_CFG_HAS_FPU
-  `ifdef E203_CFG_FPU_DOUBLE
-    `define E203_FPU_DOUBLE     
-    `define E203_FLEN 64
-  `else
     `define E203_FLEN 32
-  `endif
-`else
-    `define E203_FLEN 32
-`endif
-
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -674,112 +547,4 @@
       `define E203_DECINFO_MULDIV_MULHU_MSB   (`E203_DECINFO_MULDIV_MULHU_LSB+1-1)    
   `define E203_DECINFO_MULDIV_MULHU  `E203_DECINFO_MULDIV_MULHU_MSB:`E203_DECINFO_MULDIV_MULHU_LSB
       `define E203_DECINFO_MULDIV_DIV_LSB   (`E203_DECINFO_MULDIV_MULHU_MSB+1)
-      `define E203_DECINFO_MULDIV_DIV_MSB   (`E203_DECINFO_MULDIV_DIV_LSB+1-1)    
-  `define E203_DECINFO_MULDIV_DIV   `E203_DECINFO_MULDIV_DIV_MSB:`E203_DECINFO_MULDIV_DIV_LSB 
-      `define E203_DECINFO_MULDIV_DIVU_LSB  (`E203_DECINFO_MULDIV_DIV_MSB+1)
-      `define E203_DECINFO_MULDIV_DIVU_MSB  (`E203_DECINFO_MULDIV_DIVU_LSB+1-1)    
-  `define E203_DECINFO_MULDIV_DIVU  `E203_DECINFO_MULDIV_DIVU_MSB:`E203_DECINFO_MULDIV_DIVU_LSB
-      `define E203_DECINFO_MULDIV_REM_LSB   (`E203_DECINFO_MULDIV_DIVU_MSB+1)
-      `define E203_DECINFO_MULDIV_REM_MSB   (`E203_DECINFO_MULDIV_REM_LSB+1-1)    
-  `define E203_DECINFO_MULDIV_REM   `E203_DECINFO_MULDIV_REM_MSB:`E203_DECINFO_MULDIV_REM_LSB    
-      `define E203_DECINFO_MULDIV_REMU_LSB   (`E203_DECINFO_MULDIV_REM_MSB+1)
-      `define E203_DECINFO_MULDIV_REMU_MSB   (`E203_DECINFO_MULDIV_REMU_LSB+1-1)    
-  `define E203_DECINFO_MULDIV_REMU   `E203_DECINFO_MULDIV_REMU_MSB:`E203_DECINFO_MULDIV_REMU_LSB 
-      `define E203_DECINFO_MULDIV_B2B_LSB   (`E203_DECINFO_MULDIV_REMU_MSB+1)
-      `define E203_DECINFO_MULDIV_B2B_MSB   (`E203_DECINFO_MULDIV_B2B_LSB+1-1)    
-  `define E203_DECINFO_MULDIV_B2B   `E203_DECINFO_MULDIV_B2B_MSB:`E203_DECINFO_MULDIV_B2B_LSB 
-
-`define E203_DECINFO_MULDIV_WIDTH  (`E203_DECINFO_MULDIV_B2B_MSB+1)
-
-// Choose the longest group as the final DEC info width
-`define E203_DECINFO_WIDTH  (`E203_DECINFO_NICE_WIDTH+1)
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////// LSU relevant macro
-//
-    // Currently is OITF_DEPTH, In the future, if the ROCC
-    // support multiple oustanding
-    // we can enlarge this number to 2 or 4
-    //
-    //
-  //`ifdef E203_CFG_HAS_NICE //{
-  //  //`define E203_LSU_OUTS_NUM 2 
-  //`else//}{
-    //`define E203_LSU_OUTS_NUM `E203_OITF_DEPTH 
-    //`ifdef E203_OITF_DEPTH_IS_1
-    //  `define E203_LSU_OUTS_NUM_IS_1
-    //`endif
-    // Although we defined the OITF depth as 2, but for LSU, we still only allow 1 oustanding for LSU
-    `define E203_LSU_OUTS_NUM    1
-    `define E203_LSU_OUTS_NUM_IS_1
-  //`endif//}
-
-  `ifdef E203_CFG_SUPPORT_AMO//{
-     `define E203_SUPPORT_AMO
-  `endif//}
-  // No unalign
-  //`ifdef E203_CFG_SUPPORT_UNALGNLDST//{
-  //   `define E203_SUPPORT_UNALGNLDST
-  //`endif//}
- 
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////// BIU relevant macro
-//
-    // Currently is 1, In the future, if the DCache
-    // support hit-under-miss (out of order return), then
-    // we can enlarge this number to 2 or 4
-    //
-  `ifdef E203_HAS_DCACHE //{
-    //`define E203_BIU_OUTS_NUM 2 
-  `else//}{
-    `define E203_BIU_OUTS_NUM `E203_LSU_OUTS_NUM 
-    `ifdef E203_LSU_OUTS_NUM_IS_1
-      `define E203_BIU_OUTS_NUM_IS_1
-      `define E203_BIU_OUTS_CNT_W  1
-    `endif
-  `endif//}
-
-
-
-  // To cut the potential comb loop and critical path between LSU and IFU
-  //   and also core and external system, we always cut the ready by BIU Stage
-  //   You may argue: Always cut ready may potentially hurt throughput when the DP is just 1
-  //   but it is actually a Pseudo proposition because:
-  //     * If the BIU oustanding is just 1 in low end core, then we set DP as 1, and there is no 
-  //         throughput issue becuase just only 1 oustanding. Even for the PPI or FIO port ideally
-  //         if it is 0 cycle response and throughput can be bck-to-back ideally, but we just
-  //         sacrafy sacrifice this performance lost, since this is a low end core
-  //     * If the BIU oustanding is more than 1 in middle or high end core, then we
-  //         set DP as 2 as ping-pong buffer, and then throughput is back-to-back
-  //
-  `define E203_BIU_CMD_CUT_READY 1
-  `define E203_BIU_RSP_CUT_READY 1
-
-  // If oustanding is just 1, then we just need 1 entry
-  // If oustanding is more than 1, then we need ping-pong buffer to enhance throughput
-  //   You may argue: why not allow 0 depth to save areas, well this is to cut the potential
-  //   comb loop and critical path between LSU and IFU and external bus
-    `ifdef E203_BIU_OUTS_NUM_IS_1
-  `define E203_BIU_CMD_DP 1
-  `define E203_BIU_RSP_DP_RAW 1
-    `else
-  `define E203_BIU_CMD_DP 2
-  `define E203_BIU_RSP_DP_RAW 2
-    `endif
-  //  // We allow such configurability to cut timing path of not to save areas
-  `define E203_TIMING_BOOST
-  `ifdef E203_TIMING_BOOST
-    `define E203_BIU_RSP_DP        `E203_BIU_RSP_DP_RAW       
-  `else
-    `define E203_BIU_RSP_DP        0
-  `endif
-
+      `define E203_DECINFO_MULDIV_DIV_MSB   (`
